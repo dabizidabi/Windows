@@ -1,0 +1,79 @@
+@ECHO OFF
+
+rem vars
+SET wsrcdir=\\block1\gates\wIVS\Install\
+SET wsrclnkdir=%wsrcdir%lnk\
+SET wsrcinidir=%wsrcdir%ini\
+SET wsrchelpdir=%wsrcdir%help\
+
+rem install to disk d
+d:
+cd \
+if not exist "NotDelete" @mkdir NotDelete
+cd \NotDelete\ 
+
+if not exist "wIVS" @mkdir wIVS
+cd wIVS
+
+echo.
+echo lnk - files 
+echo ----------- 
+@xcopy /Y %wsrclnkdir%* 
+
+echo.
+echo ini - files 
+echo -----------
+if exist "ini" (
+@set /p fcopyini="* Copy the ini-files? "
+if "%fcopyini%"=="y" set fcopyini=Y) else (
+  set fcopyini=Y
+  @mkdir ini
+)
+if "%fcopyini%"=="y" set fcopyini=Y
+if "%fcopyini%"=="Y" xcopy /Y %wsrcinidir%* ini\
+
+echo.
+echo help - files 
+echo ----------- 
+if not exist "help" (
+  @mkdir help
+)
+@xcopy /Y %wsrchelpdir%* help\
+
+echo.
+echo cfg - dir
+echo ---------
+@mkdir cfg
+
+echo.
+echo wDISPO - dir
+echo ----------------------
+if not exist "wDISPO" @mkdir wDISPO
+cd wDISPO
+if not exist "1" @mkdir 1
+cd 1
+if not exist "Graph" @mkdir Graph
+if not exist "RSM" @mkdir RSM
+if not exist "RTS" @mkdir RTS
+if not exist "RSA" @mkdir RSA
+cd ..
+if not exist "2" @mkdir 2
+cd 2
+if not exist "Graph" @mkdir Graph
+if not exist "RSM" @mkdir RSM
+if not exist "RTS" @mkdir RTS
+if not exist "RSA" @mkdir RSA
+cd ..
+if not exist "UTC" @mkdir UTC
+cd UTC
+if not exist "Graph" @mkdir Graph
+if not exist "RSM" @mkdir RSM
+if not exist "RTS" @mkdir RTS
+if not exist "RSA" @mkdir RSA
+
+echo ---------------------------------------------
+copy d:\NotDelete\wIVS\*.lnk "%USERPROFILE%\Desktop\"
+copy d:\NotDelete\wIVS\*.lnk "%PUBLIC%\Desktop\"
+copy d:\NotDelete\wIVS\*.lnk "%USERPROFILE%\Рабочий стол\"
+echo.
+pause
